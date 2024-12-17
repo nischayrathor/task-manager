@@ -17,11 +17,10 @@ USER apprunner
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY . .
 
 RUN pip install -r requirements.txt
 
-COPY . .
-
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+
 CMD ["python", "main.py"]
