@@ -47,6 +47,3 @@ services:
       - task-manager
 networks:
   task-manager:
-
-
-
