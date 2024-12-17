@@ -1,0 +1,27 @@
+---
+version: '3'
+
+env:
+  env_file: ".env"
+
+tasks:
+  default:
+    cmds:
+      - echo "****** Task Manager ********"
+      - echo "Task file for working on task-manager app"
+  build:
+    cmds:
+      - source {{.env_file}}
+      - docker compose --env-file {{.env_file}} build app
+  up:
+    cmds:
+      - source {{.env_file}}
+      - docker compose --env-file {{.env_file}} up app --force-recreate
+  stop:
+    cmds:
+      - source {{.env_file}}
+      - docker compose --env-file {{.env_file}} down app
+  security_scans:
+    cmds:
+      - trivy image task-manager:$TAG
+      - trivy fs --scanners vuln,secret,misconfig .

@@ -2,16 +2,25 @@
 
 #### Building container images
 
+***Using task tool***
+
+* https://taskfile.dev/
+
 ```bash
-docker compose --env-file .env build
-docker compose --env-file .env up app --force-recreate
+task build
 ```
 
-#### Running Application
+#### Running Application for local development
 
 ```bash
 pip3 install -r requirements.txt
 python3 main.py
+```
+
+#### Running via container image
+
+```bash
+task up
 ```
 
 ### How to use APP
@@ -81,6 +90,7 @@ curl -v -XPOST localhost:8080/new_task \
 
 #### Security Scans
 Using Trviy - https://github.com/aquasecurity/trivy
+
 ***Container Image***
 
 ```bash
@@ -97,3 +107,6 @@ trivy fs --scanners vuln,secret,misconfig .
 ### License
 
 Please see the *LICENSE* for more information.
+
+### Links
+1. https://taskfile.dev/
