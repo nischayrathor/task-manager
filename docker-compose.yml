@@ -20,6 +20,7 @@ services:
       - task-manager
   db:
     image: postgres:17.2
+    command: -c config_file=/etc/postgresql/postgresql.conf -c hba_file=/etc/postgresql/pg_hba.conf
     container_name: postgres-db
     restart: unless-stopped
     user: postgres
@@ -37,6 +38,11 @@ services:
     volumes:
       - ./pg_data:/var/lib/postgresql/data
       - ./app_schema.sql:/docker-entrypoint-initdb.d/app_schema.sql
+      - ./certs/server.crt:/var/lib/postgresql/server.crt
+      - ./certs/server.key:/var/lib/postgresql/server.key
+      - ./certs/root.crt:/var/lib/postgresql/root.crt
+      - ./postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./pg_hba.conf:/etc/postgresql/pg_hba.conf
     networks:
       - task-manager
 networks:

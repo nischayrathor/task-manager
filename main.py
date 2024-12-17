@@ -17,17 +17,19 @@ class NewTask(BaseModel):
 def read_root():
     return {"message": "Welcome to FastAPI!"}
 
-db_config = {
+DB_CONFIG = {
     "dbname": os.environ.get("POSTGRES_DB"),
     "user": os.environ.get("POSTGRES_USER"),
     "password": os.environ.get("POSTGRES_PASSWORD"),
     "host": os.environ.get("DATABASE_HOST"),
     "port": 5432,
+    "sslrootcert": os.environ.get("SSLROOTCERT"),
+    "sslmode": os.environ.get("SSLMODE"),
 }
 
 @app.get("/health")
 async def healthCheck():
-    result = db_health(db_config)
+    result = db_health(DB_CONFIG)
     if result['postgres_healthy']:
         return JSONResponse(content=result, status_code=status.HTTP_200_OK)
     else:
@@ -35,7 +37,7 @@ async def healthCheck():
 
 @app.get("/get_tasks")
 async def get_tasks():
-    result = get_all_tasks(db_config)
+    result = get_all_tasks(DB_CONFIG)
     if 'error' in result:
         return JSONResponse(content=result, status_code=result['error'])
     else:
@@ -44,7 +46,7 @@ async def get_tasks():
 
 @app.get('/get_task/{task_id}')
 async def get_task(task_id):
-    result = get_task_data(db_config, task_id)
+    result = get_task_data(DB_CONFIG, task_id)
     if 'error' in result:
         return JSONResponse(content=result, status_code=result['error'])
     else:
@@ -53,7 +55,7 @@ async def get_task(task_id):
 
 @app.post('/new_task')
 async def new_task(task_data: NewTask):
-    result = add_new_task(db_config, task_data)
+    result = add_new_task(DB_CONFIG, task_data)
     if result['task_added']:
         return JSONResponse(content=result, status_code=status.HTTP_201_CREATED)
     else:

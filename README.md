@@ -91,6 +91,10 @@ curl -v -XPOST localhost:8080/new_task \
 #### Security Scans
 Using Trviy - https://github.com/aquasecurity/trivy
 
+```bash
+task security_scans
+```
+
 ***Container Image***
 
 ```bash
@@ -110,3 +114,4 @@ Please see the *LICENSE* for more information.
 
 ### Links
 1. https://taskfile.dev/
+2. https://github.com/go-task/task

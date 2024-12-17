@@ -5,3 +5,4 @@ pg_data
 .env
 __pycache__
 *.env
+certs/

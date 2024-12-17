@@ -2,7 +2,7 @@
 version: '3'
 
 env:
-  env_file: ".env"
+  env_file: "dev.env"
 
 tasks:
   default:
@@ -11,17 +11,27 @@ tasks:
       - echo "Task file for working on task-manager app"
   build:
     cmds:
-      - source {{.env_file}}
       - docker compose --env-file {{.env_file}} build app
   up:
     cmds:
-      - source {{.env_file}}
-      - docker compose --env-file {{.env_file}} up app --force-recreate
+      - docker compose --env-file {{.env_file}} up -d db
+      - docker compose --env-file {{.env_file}} up -d app --force-recreate
+    deps:
+      - build
+      - stop
   stop:
     cmds:
-      - source {{.env_file}}
       - docker compose --env-file {{.env_file}} down app
+  status:
+    cmds:
+      - docker compose ps 2>/dev/null
   security_scans:
     cmds:
-      - trivy image task-manager:$TAG
+      - source {{.env_file}} && trivy image task-manager:$TAG
       - trivy fs --scanners vuln,secret,misconfig .
+    deps:
+      - build
+  bootstrap_certs:
+    cmds:
+      - echo "******* Creating SSL Certificate for postgres server and client. *******"
+      - bash gen-certs.sh
