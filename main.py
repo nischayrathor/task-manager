@@ -23,7 +23,6 @@ DB_CONFIG = {
     "password": os.environ.get("POSTGRES_PASSWORD"),
     "host": os.environ.get("DATABASE_HOST"),
     "port": 5432,
-    "sslrootcert": os.environ.get("SSLROOTCERT"),
     "sslmode": os.environ.get("SSLMODE"),
 }
 

@@ -3,5 +3,11 @@
 .git
 pg_data
 .env
+*.env
 __pycache__
 certs/
+pg_hba.conf
+postgresql.conf
+gen-certs.sh
+*.sql
+Taskfile.yaml
