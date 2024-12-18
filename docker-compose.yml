@@ -3,10 +3,13 @@
 services:
   app:
     image: task-manager:${TAG}
-    user: ${UID}:${GID}
+    user: 1000:1000
     build:
       context: .
       dockerfile: Dockerfile
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64"
     container_name: task-manager
     ports:
       - "8080:8080"

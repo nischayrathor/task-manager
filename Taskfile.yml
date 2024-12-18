@@ -12,6 +12,8 @@ tasks:
   build:
     cmds:
       - docker compose --env-file {{.env_file}} build app
+      - source {{.env_file}} && docker tag task-manager:$TAG gcr.io/prod-temp-265113/task-manager:$TAG
+      - source {{.env_file}} && docker push gcr.io/prod-temp-265113/task-manager:$TAG
   up:
     cmds:
       - docker compose --env-file {{.env_file}} up -d db
