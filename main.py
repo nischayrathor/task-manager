@@ -1,5 +1,5 @@
 from fastapi import FastAPI, status
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse
 from pydantic import BaseModel
 import uvicorn
 from db_handler import db_health, get_all_tasks, get_task_data, add_new_task
@@ -25,6 +25,19 @@ DB_CONFIG = {
     "port": 5432,
     "sslmode": os.environ.get("SSLMODE"),
 }
+
+@app.get("/", response_class=HTMLResponse)
+def read_root():
+    return """
+    <html>
+        <head>
+            <title>Task Manager App</title>
+        </head>
+        <body>
+            <h1>Welcome to Task Manager app!</h1>
+        </body>
+    </html>
+    """
 
 @app.get("/health")
 async def healthCheck():
