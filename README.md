@@ -1,10 +1,9 @@
 ## task-manager
+A simple app to manage todo list.
 
 #### Building container images
 
 ***Using task tool***
-
-* https://taskfile.dev/
 
 ```bash
 task build
@@ -13,6 +12,7 @@ task build
 #### Running Application for local development
 
 ```bash
+source dev.env
 pip3 install -r requirements.txt
 python3 main.py
 ```
