@@ -4,6 +4,11 @@ services:
   app:
     image: task-manager:${TAG}
     user: 1000:1000
+    healthcheck:
+      test: "curl -f http://localhost:8080/health"
+      interval: 30s
+      timeout: 10s
+      retries: 5
     build:
       context: .
       dockerfile: Dockerfile
@@ -22,6 +27,7 @@ services:
       - db
     networks:
       - task-manager
+    restart: unless-stopped
   db:
     image: postgres:17.2
     command: -c config_file=/etc/postgresql/postgresql.conf -c hba_file=/etc/postgresql/pg_hba.conf
